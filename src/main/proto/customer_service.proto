@@ -1,0 +1,84 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "io.grpc.partnerservice";
+option java_outer_classname = "PartnerService";
+option objc_class_prefix = "ps";
+
+package customer_service;
+
+service CustomerService {
+    rpc GetCustomerById (Id) returns (Customer);
+    rpc GetCustomersByFirstName (FirstName) returns (Customers);
+    rpc GetCustomersByLastName(LastName) returns (Customers);
+    rpc GetCustomersByGender(Gender) returns (Customers);
+    rpc GetCustomersByAddress(Address) returns (Customers);
+    rpc GetCustomersByZip (Zip) returns (Customers);
+    rpc GetCustomersByCity (City) returns (Customers);
+    rpc GetCustomersByState (State) returns (Customers);
+    rpc GetCustomersByCountry (Country) returns (Customers);
+    rpc GetCustomersByTelephone (Telephone) returns (Customers);
+    rpc GetCustomersByEmail (Email) returns (Customers);
+}
+
+message Id {
+    int32 id = 1;
+}
+
+message FirstName {
+    string first_name = 1;
+}
+
+message LastName {
+    string first_name = 1;
+}
+
+message Gender {
+    string gender = 1;
+}
+
+message Address {
+    string address = 1;
+}
+
+message Zip {
+    string zip = 1;
+}
+
+message City {
+    string city = 1;
+}
+
+message State {
+    string state = 1;
+}
+
+message Country {
+    string country = 1;
+}
+
+message Telephone {
+    string telephone = 1;
+}
+
+message Email {
+    string email = 1;
+}
+
+message Customer {
+    int32 id = 1;
+    string first_name = 2;
+    string last_name = 3;
+    string gender = 4;
+    string address = 5;
+    string zip = 6;
+    string city = 7;
+    string state = 8;
+    string country = 9;
+    string telephone = 10;
+    string email = 11;
+}
+
+message Customers {
+    repeated Customer customers = 1;
+}

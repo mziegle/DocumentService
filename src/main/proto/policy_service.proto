@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "io.grpc.policyservice";
+option java_outer_classname = "PolicyServiceProto";
+option objc_class_prefix = "ps";
+
+import "customer_service.proto";
+package policy_service;
+
+// The greeting service definition.
+service PolicyService {
+    rpc getPolicyById (PolicyId) returns (Policy) {};
+    rpc streamPoliciesByValidityDateBetween(Period) returns (stream Policy){};
+}
+
+message Period {
+    int64 from = 1;
+    int64 to = 2;
+}
+
+message PolicyId {
+    int32 id = 1;
+}
+
+message Policy {
+    int32 id = 1;
+    customer_service.Customer customer = 2;
+    int64 validity_date = 3;
+    string territorial_scope = 4;
+    string insurer = 5;
+    repeated Contract contracts = 6;
+}
+
+message Contract {
+    int32 id = 1;
+    string type = 2;
+    double amount_insured = 3;
+    int64 completion_date = 4;
+    int64 expiration_date = 5;
+    double annual_subscription = 6;
+}
