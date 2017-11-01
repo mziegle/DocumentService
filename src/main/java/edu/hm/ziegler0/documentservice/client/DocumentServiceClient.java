@@ -87,7 +87,8 @@ public class DocumentServiceClient {
         long fromEpochMilli = from.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
         long toEpochMilli = to.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
 
-        Iterator<PDFDocument> pdfDocumentIterator = blockingStub.streamBillsOfPeriod(Period.newBuilder().setFrom(fromEpochMilli).setTo(toEpochMilli).build());
+        Iterator<PDFDocument> pdfDocumentIterator = blockingStub.streamBillsOfPeriod(
+                Period.newBuilder().setFrom(fromEpochMilli).setTo(toEpochMilli).build());
 
         for(int i = 0;pdfDocumentIterator.hasNext();i++){
 

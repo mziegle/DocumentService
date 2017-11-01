@@ -76,7 +76,7 @@ public class PdfTemplateStamper {
                 subTotal += contract.getAnnualSubscription();
             }
 
-            acroForm.getField("subTotal").setValue(String.valueOf(subTotal));
+            acroForm.getField("subTotal").setValue(String.valueOf(round(subTotal,2)));
             double tax = subTotal * GERMAN_TAX_FACTOR;
             acroForm.getField("tax").setValue(String.valueOf(round(tax,2)));
             acroForm.getField("totalPayable").setValue(String.valueOf(round(subTotal+tax,2)));

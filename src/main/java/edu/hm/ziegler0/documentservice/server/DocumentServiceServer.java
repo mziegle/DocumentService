@@ -12,6 +12,8 @@ import io.grpc.policyservice.PolicyServiceGrpc;
 import io.grpc.stub.StreamObserver;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -56,6 +58,8 @@ public class DocumentServiceServer {
      */
     private void start() throws IOException {
 
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
         server = ServerBuilder.forPort(documentServicePort)
                 .addService(new DocumentServiceGrpc.DocumentServiceImplBase() {
 
@@ -65,6 +69,7 @@ public class DocumentServiceServer {
                         Policy policy = policyServiceBlockingStub.getPolicyById(request);
 
                         responseObserver.onNext(PDFDocument.newBuilder()
+                                .setFileName("bill_ID_" + policy.getId() + "_VALIDITY_DATE_" + simpleDateFormat.format(new Date(policy.getValidityDate())))
                                 .setPdfDocument(pdfTemplateStamper.makeBill(policy))
                                 .build());
                         responseObserver.onCompleted();
@@ -79,6 +84,7 @@ public class DocumentServiceServer {
                         while (policyIterator.hasNext()){
                             Policy policy = policyIterator.next();
                             responseObserver.onNext(PDFDocument.newBuilder()
+                                    .setFileName("bill_ID_" + policy.getId() + "_VALIDITY_DATE_" + simpleDateFormat.format(new Date(policy.getValidityDate())))
                                     .setPdfDocument(pdfTemplateStamper.makeBill(policy))
                                     .build());
                         }

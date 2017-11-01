@@ -13,6 +13,9 @@ docker build --rm -t document_service:run run
 
 docker rm -f document_service_build
 
+# Remove intermediate containers which have appeared during the build process
+docker rmi $(docker images -f "dangling=true" -q)
+
 docker run \
     -p 50033:50033 \
     -e POLICY_SERVICE_PORT=50032 \
