@@ -38,18 +38,12 @@ public class PdfTemplateStamper {
 
     public ByteString makeBill(final Policy policy){
 
-        PDDocument pdfDocument = null;
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
-        try {
-            pdfDocument = PDDocument.load(template);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        try (PDDocument pdfDocument = PDDocument.load(template)) {
 
-        PDDocumentCatalog docCatalog = pdfDocument.getDocumentCatalog();
-        PDAcroForm acroForm = docCatalog.getAcroForm();
-
-        try {
+            PDDocumentCatalog docCatalog = pdfDocument.getDocumentCatalog();
+            PDAcroForm acroForm = docCatalog.getAcroForm();
 
             Customer customer = policy.getCustomer();
 
@@ -83,13 +77,8 @@ public class PdfTemplateStamper {
 
             acroForm.getFields().forEach((field) -> field.setReadOnly(true));
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        try {
             pdfDocument.save(byteArrayOutputStream);
+
         } catch (IOException e) {
             e.printStackTrace();
         }

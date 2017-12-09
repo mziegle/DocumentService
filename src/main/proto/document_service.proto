@@ -12,9 +12,15 @@ package document_service;
 service DocumentService {
     rpc getBillToPolicy(policy_service.PolicyId) returns (PDFDocument){};
     rpc streamBillsOfPeriod(policy_service.Period) returns (stream PDFDocument){};
+    rpc streamFiles(stream Chunk) returns (stream Chunk) {};
 }
 
 message PDFDocument {
     string file_name = 1;
     bytes pdfDocument = 2;
+}
+
+message Chunk {
+    int64 length = 1;
+    bytes buffer = 2;
 }
