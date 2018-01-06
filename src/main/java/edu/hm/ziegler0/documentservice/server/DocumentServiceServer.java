@@ -123,7 +123,6 @@ public class DocumentServiceServer {
 
                     }
 
-
                     @Override
                     public StreamObserver<Chunk> streamFiles(StreamObserver<Chunk> responseObserver) {
 
@@ -158,9 +157,6 @@ public class DocumentServiceServer {
                     @Override
                     public void streamBillsOfPeriod(Period request, StreamObserver<PDFDocument> responseObserver) {
 
-                        // Iterator<Policy> policyIterator =
-                        //        policyServiceBlockingStub.streamPoliciesByValidityDateBetween(request);
-
                         policyServiceStub.streamPoliciesByValidityDateBetween (
 
                             request, new StreamObserver<Policy>() {
@@ -186,20 +182,6 @@ public class DocumentServiceServer {
                                 }
                             }
                         );
-
-                        /*
-                        while (policyIterator.hasNext()){
-                            Policy policy = policyIterator.next();
-
-                            responseObserver.onNext(PDFDocument.newBuilder()
-                                    .setFileName("bill_ID_" + policy.getId() + "_VALIDITY_DATE_"
-                                            + simpleDateFormat.format(new Date(policy.getValidityDate())))
-                                    .setPdfDocument(pdfTemplateStamper.makeBill(policy))
-                                    .build());
-                        }
-
-                        responseObserver.onCompleted();
-                        */
                     }
                 })
                 .build()
